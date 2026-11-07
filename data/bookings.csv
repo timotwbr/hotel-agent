@@ -1,0 +1,6 @@
+booking_id,name,email,check_in,check_out,room,breakfast,rate,paid
+B001,Marta Puig,marta.puig@example.com,2026-11-13,2026-11-16,Double,yes,flexible,no
+B002,Tom Becker,tom.becker@example.com,2026-11-20,2026-11-22,Suite,no,non-refundable,yes
+B003,Elena Rossi,elena.rossi@example.com,2026-10-24,2026-10-28,Family,yes,flexible,yes
+B004,Aiko Tanaka,aiko.tanaka@example.com,2026-12-05,2026-12-07,Double,no,flexible,no
+B005,Luis Fernandez,luis.fernandez@example.com,2026-11-27,2026-11-29,Suite,yes,non-refundable,yes

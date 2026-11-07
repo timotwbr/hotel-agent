@@ -1,0 +1,35 @@
+[
+  {
+    "time": "2026-11-06T18:29:52.391Z",
+    "name": "Elena Rossi",
+    "email": "elena.rossi@example.com",
+    "message": "The lift was out of order for three days and we were on teh 9th floor with a baby. We want compensation. Thanks, Elena",
+    "reply": "Dear Elena, I'm sorry about the lift being out of order for three days. That must have been very hard with a baby on the 9th floor. I can't decide on compensation myself, so I've passed your request to a member of staff. They will reply to you by e-mail at elena.rossi@example.com.",
+    "department": "Complaints & Feedback",
+    "urgency": "normal",
+    "summary": "Guest Elena Rossi requests compensation: lift out of order for three days while staying on 9th floor with a baby.",
+    "status": "ESCALATED"
+  },
+  {
+    "time": "2026-11-06T18:34:18.548Z",
+    "name": "Tom Becker",
+    "email": "tom.becker@example.com",
+    "message": "We arrive on the 20th. Is breakfast included in our booking? And can we still cancel if our plans change?",
+    "reply": "Hello Tom. Your booking is a Suite from 20 to 22 November 2026, and it doesn't include breakfast. Our buffet runs from 07:00 to 10:30. It costs €12 per person per day if you add it to your booking in advance, or €14 if you add it at check-in. Children under 6 eat free.\n\nYour booking is on the non-refundable rate, which is already paid. It can't be refunded if you cancel or don't show up. You can move the stay once to new dates within 6 months, subject to availability, for a €25 change fee.",
+    "department": "Reservations",
+    "urgency": "normal",
+    "summary": "Guest asks if breakfast is included and if cancellation is possible; booking is non-refundable, no breakfast, arrival 20 Nov 2026.",
+    "status": "ANSWERED"
+  },
+  {
+    "time": "2026-11-06T18:34:52.344Z",
+    "name": "Tom Becker",
+    "email": "t.becker@example.com",
+    "message": "We arrive on the 20th. Is breakfast included in our booking? And can we still cancel if our plans change?",
+    "reply": "Hello Tom, thank you for your message. I couldn't find a booking linked to this chat, so I can't confirm whether breakfast is included or which cancellation terms apply to you. I've passed your questions to a member of staff. They will check your reservation and reply to you at t.becker@example.com.",
+    "department": "Reservations",
+    "urgency": "normal",
+    "summary": "Guest arriving on the 20th asks if breakfast is included and if they can cancel; no booking found, so staff need to check.",
+    "status": "ESCALATED"
+  }
+]

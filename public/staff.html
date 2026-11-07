@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<!-- Staff page. No login yet: anyone who reaches this URL can read every request. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hotel Estrella - staff requests</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 1rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        color: #1b2a41;
+        font-size: 14px;
+      }
+      h1 {
+        font-size: 1.1rem;
+        margin: 0 0 0.75rem;
+      }
+      .filters {
+        margin-bottom: 0.75rem;
+      }
+      .filters button {
+        font: inherit;
+        padding: 0.3rem 0.8rem;
+        margin-right: 0.4rem;
+        border: 1px solid #bbb;
+        background: #f3f4f6;
+        cursor: pointer;
+      }
+      .filters button.active {
+        background: #1b2a41;
+        color: #fff;
+        border-color: #1b2a41;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 0.35rem 0.5rem;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #f3f4f6;
+      }
+      tbody tr {
+        cursor: pointer;
+      }
+      tbody tr:hover {
+        background: #f9fafb;
+      }
+      .trace {
+        margin-top: 1rem;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        background: #fafafa;
+        white-space: pre-wrap;
+        font-family: ui-monospace, Menlo, monospace;
+        font-size: 13px;
+      }
+      .trace[hidden] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Guest requests</h1>
+
+    <div class="filters">
+      <button data-filter="all" class="active">All</button>
+      <button data-filter="ESCALATED">Escalated</button>
+      <button data-filter="ANSWERED">Answered</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Message</th>
+          <th>Department</th>
+          <th>Urgency</th>
+          <th>Status</th>
+          <th>Reply</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+
+    <div id="trace" class="trace" hidden></div>
+
+    <script>
+      let requests = [];
+      let filter = "all";
+
+      async function load() {
+        const res = await fetch("/api/requests");
+        requests = await res.json();
+        render();
+      }
+
+      function render() {
+        const tbody = document.getElementById("rows");
+        tbody.innerHTML = "";
+
+        requests
+          .map((r, i) => ({ r, i }))
+          .filter(({ r }) => filter === "all" || r.status === filter)
+          .forEach(({ r, i }) => {
+            const tr = document.createElement("tr");
+            tr.dataset.index = i;
+            tr.innerHTML = `
+              <td>${cell(r.time)}</td>
+              <td>${cell(r.name)}</td>
+              <td>${cell(r.email)}</td>
+              <td>${cell(r.message)}</td>
+              <td>${cell(r.department)}</td>
+              <td>${cell(r.urgency)}</td>
+              <td>${cell(r.status)}</td>
+              <td>${cell(r.reply)}</td>
+            `;
+            tr.addEventListener("click", () => showTrace(i));
+            tbody.appendChild(tr);
+          });
+      }
+
+      // Escape text so it is shown, not interpreted as HTML.
+      function cell(value) {
+        const span = document.createElement("span");
+        span.textContent = value == null ? "" : String(value);
+        return span.innerHTML;
+      }
+
+      function showTrace(index) {
+        const box = document.getElementById("trace");
+        const row = requests[index];
+        const trace = row.trace || [];
+
+        const lines = trace.map((e) => {
+          if (e.kind === "model") {
+            return `model step ${e.step}: stop_reason=${e.stop_reason}, asked_for_tool=${e.asked_for_tool}`;
+          }
+          if (e.kind === "tool") {
+            return `tool ${e.name}: args=${JSON.stringify(e.arguments)} -> ${e.result}`;
+          }
+          if (e.kind === "final") {
+            return `final: ${e.answer}`;
+          }
+          return JSON.stringify(e);
+        });
+
+        box.hidden = false;
+        box.textContent = lines.length ? lines.join("\n") : "(no trace)";
+      }
+
+      document.querySelectorAll(".filters button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filter = btn.dataset.filter;
+          document
+            .querySelectorAll(".filters button")
+            .forEach((b) => b.classList.toggle("active", b === btn));
+          document.getElementById("trace").hidden = true;
+          render();
+        });
+      });
+
+      load();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hotel Estrella</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Hotel Estrella</h1>
+
+      <!-- 7-day weather strip, filled in by app.js -->
+      <section class="weather" aria-label="Seven day weather in Barcelona">
+        <div id="weather-strip" class="weather-strip">
+          <p class="weather-loading">Loading the weather.</p>
+        </div>
+      </section>
+
+      <p class="intro">
+        Send us a message and we will reply here. Please leave your name and
+        email so we can follow up if needed.
+      </p>
+
+      <form id="message-form" novalidate>
+        <label>
+          Name
+          <input type="text" id="name" name="name" required />
+        </label>
+
+        <label>
+          Email
+          <input type="email" id="email" name="email" required />
+        </label>
+
+        <label>
+          Please leave your message
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </label>
+
+        <button type="submit" class="send">Send</button>
+      </form>
+
+      <!-- The model reply appears here -->
+      <section id="reply" class="reply" aria-live="polite" hidden></section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
